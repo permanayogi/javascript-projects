@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/permanayogi/javascript-projects/issues"
   },
-  "homepage": "https://github.com/permanayogi/javascript-projects#readme"
+  "homepage": "https://github.com/permanayogi/javascript-projects#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
