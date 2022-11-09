@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/permanayogi/javascript-projects/issues"
   },
-  "homepage": "https://github.com/permanayogi/javascript-projects#readme"
+  "homepage": "https://github.com/permanayogi/javascript-projects#readme",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
 }
