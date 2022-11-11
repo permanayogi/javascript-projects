@@ -49,6 +49,13 @@ const routes = [
         },
     },
     {
+        method: "POST",
+        path: "/user",
+        handler: (request, h => {
+            return h.response('created').code(201);
+        })
+    },
+    {
         method: "*",
         path: "/{any*}",
         handler: (request, h) => {
