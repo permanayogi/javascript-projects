@@ -1,3 +1,5 @@
 {
-	"typescript.preferences.quoteStyle": "single"
+  "typescript.preferences.quoteStyle": "single",
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.guides.highlightActiveBracketPair": true
 }
