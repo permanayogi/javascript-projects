@@ -3,6 +3,7 @@
 const { nanoid } = require('nanoid');
 const books = require('./books');
 
+// Handler for adding books
 const addBooksHandler = (request, h) => {
   const {
     name, year, author, summary, publisher, pageCount, readPage, reading,
@@ -12,6 +13,7 @@ const addBooksHandler = (request, h) => {
   const updatedAt = insertedAt;
   let finished;
 
+  // Check pageCount for assign finished value
   if (pageCount === readPage) {
     finished = true;
   } else {
@@ -32,6 +34,7 @@ const addBooksHandler = (request, h) => {
     insertedAt,
     updatedAt,
   };
+  // Check if name is not defined on body request
   if (name === undefined) {
     const response = h.response({
       status: 'fail',
@@ -40,6 +43,8 @@ const addBooksHandler = (request, h) => {
     response.code(400);
     return response;
   }
+
+  // Check if readPage bigger than pageCount
   if (readPage > pageCount) {
     const response = h.response({
       status: 'fail',
@@ -48,6 +53,8 @@ const addBooksHandler = (request, h) => {
     response.code(400);
     return response;
   }
+
+  // If body request complete, push data to books
   books.push(newBooks);
   const isSuccess = books.filter((book) => book.id === id).length > 0;
 
@@ -71,26 +78,21 @@ const addBooksHandler = (request, h) => {
   return response;
 };
 
-// const getAllBooksHandler = () => ({
-//   status: 'success',
-//   data: {
-//     books: books.map((book) => (
-//       {
-//         id: book.id,
-//         name: book.name,
-//         publisher: book.publisher,
-//       })),
-//   },
-// });
-
+// Handler for get all books
 const getAllBooksHandler = (request, h) => {
+  // [Optional] declare variable from query parameter
   const { name, reading, finished } = request.query;
   let bookFilter = books;
 
+  // [Optional] check if name is assigned, it should return array that include name from query
   if (name !== undefined) {
     bookFilter = books.filter((bf) => bf.name.toLowerCase().includes(name.toLowerCase()));
   }
 
+  /* [Optional] check if reading is assigned in query, it should
+  return array finished books when query value is 1, return array unfinished book
+  when value is 0, return all books when if of them in query
+  */
   if (reading !== undefined) {
     if (reading == 1) {
       bookFilter = books.filter((bf) => bf.reading == reading);
@@ -101,6 +103,9 @@ const getAllBooksHandler = (request, h) => {
     }
   }
 
+  /* [Optional] check if finished is assigned in query parameter, it should return
+  an array of finished books when query is 1, unfinished books when query is 0,
+  return all books data if none of them in query */
   if (finished !== undefined) {
     if (finished == 1) {
       bookFilter = books.filter((bf) => bf.finished == finished);
@@ -126,6 +131,7 @@ const getAllBooksHandler = (request, h) => {
   return response;
 };
 
+// Handler for detail book
 const detailBookHandler = (request, h) => {
   const { bookId } = request.params;
 
@@ -148,6 +154,7 @@ const detailBookHandler = (request, h) => {
   return response;
 };
 
+// Handler for edit book
 const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
@@ -212,6 +219,7 @@ const editBookByIdHandler = (request, h) => {
   return response;
 };
 
+// Handler for delete book
 const deleteBookById = (request, h) => {
   const { bookId } = request.params;
 
