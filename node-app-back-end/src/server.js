@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
+/* eslint linebreak-style: ["error", "windows"] */
 const Hapi = require('@hapi/hapi');
-const routes = require('./routes.js');
+const routes = require('./routes');
 
 const init = async () => {
   const server = Hapi.server({

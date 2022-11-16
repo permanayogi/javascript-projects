@@ -1,10 +1,12 @@
+/* eslint linebreak-style: ["error", "windows"] */
 const {
   addNoteHandler,
   getAllNotesHandler,
   getNoteByIdHandler,
   editNoteByIdHandler,
   deleteNoteById,
-} = require('./handler.js');
+} = require('./handler');
+
 const routes = [
   {
     method: 'POST',
