@@ -112,7 +112,7 @@ const getAllBooksHandler = (request, h) => {
   }
 
   const response = h.response({
-    message: 'success',
+    status: 'success',
     data: {
       books: bookFilter.map((book) => (
         {
@@ -122,7 +122,7 @@ const getAllBooksHandler = (request, h) => {
         })),
     },
   });
-  response.code(201);
+  response.code(200);
   return response;
 };
 
@@ -142,7 +142,7 @@ const detailBookHandler = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Catatan tidak ditemukan',
+    message: 'Buku tidak ditemukan',
   });
   response.code(404);
   return response;
