@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint linebreak-style: ["error", "windows"] */
 const { nanoid } = require('nanoid');
 const books = require('./books');
@@ -7,7 +8,6 @@ const addBooksHandler = (request, h) => {
     name, year, author, summary, publisher, pageCount, readPage, reading,
   } = request.payload;
   const id = nanoid(16);
-
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
   let finished;
@@ -71,17 +71,60 @@ const addBooksHandler = (request, h) => {
   return response;
 };
 
-const getAllBooksHandler = () => ({
-  status: 'success',
-  data: {
-    books: books.map((book) => (
-      {
-        id: book.id,
-        name: book.name,
-        publisher: book.publisher,
-      })),
-  },
-});
+// const getAllBooksHandler = () => ({
+//   status: 'success',
+//   data: {
+//     books: books.map((book) => (
+//       {
+//         id: book.id,
+//         name: book.name,
+//         publisher: book.publisher,
+//       })),
+//   },
+// });
+
+const getAllBooksHandler = (request, h) => {
+  const { name, reading, finished } = request.query;
+  let bookFilter = books;
+
+  if (name !== undefined) {
+    bookFilter = books.filter((bf) => bf.name.toLowerCase().includes(name.toLowerCase()));
+  }
+
+  if (reading !== undefined) {
+    if (reading == 1) {
+      bookFilter = books.filter((bf) => bf.reading == reading);
+    } else if (reading == 0) {
+      bookFilter = books.filter((bf) => bf.reading == reading);
+    } else {
+      bookFilter = books;
+    }
+  }
+
+  if (finished !== undefined) {
+    if (finished == 1) {
+      bookFilter = books.filter((bf) => bf.finished == finished);
+    } else if (finished == 0) {
+      bookFilter = books.filter((bf) => bf.finished == finished);
+    } else {
+      bookFilter = books;
+    }
+  }
+
+  const response = h.response({
+    message: 'success',
+    data: {
+      books: bookFilter.map((book) => (
+        {
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+        })),
+    },
+  });
+  response.code(201);
+  return response;
+};
 
 const detailBookHandler = (request, h) => {
   const { bookId } = request.params;

@@ -32,9 +32,9 @@ const routes = [
         path: "/hello/{username?}",
         handler: (request, h) => {
             const { username = "stranger" } = request.params;
-            const { lang } = request.query;
+            const { langg } = request.query;
 
-            if (lang === "id") {
+            if (langg === "id") {
                 return `Hai, ${username}`;
             }
             return `Hello, ${username}!`;
@@ -51,9 +51,9 @@ const routes = [
     {
         method: "POST",
         path: "/user",
-        handler: (request, h => {
+        handler: (request, h) => {
             return h.response('created').code(201);
-        })
+        },
     },
     {
         method: "*",
