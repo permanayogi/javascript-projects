@@ -1,5 +1,6 @@
-const { nanoid } = require('nanoid');
-const notes = require('./notes.js');
+/* eslint linebreak-style: ["error", "windows"] */
+const { nanoid } = require('nanoid'); // \n
+const notes = require('./notes');
 
 const addNoteHandler = (request, h) => {
   const { title, tags, body } = request.payload;
@@ -120,7 +121,7 @@ const deleteNoteById = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Catatan gagal dihapus. ID	tidak ditemukan',
+    message: 'Catatan gagal dihapus. ID tidak ditemukan',
   });
   response.code(404);
   return response;
