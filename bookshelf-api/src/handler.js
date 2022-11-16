@@ -8,8 +8,8 @@ const addBooksHandler = (request, h) => {
   } = request.payload;
   const id = nanoid(16);
 
-  const createdAt = new Date().toISOString();
-  const updatedAt = createdAt;
+  const insertedAt = new Date().toISOString();
+  const updatedAt = insertedAt;
   let finished;
 
   if (pageCount === readPage) {
@@ -19,6 +19,7 @@ const addBooksHandler = (request, h) => {
   }
 
   const newBooks = {
+    id,
     name,
     year,
     author,
@@ -26,10 +27,9 @@ const addBooksHandler = (request, h) => {
     publisher,
     pageCount,
     readPage,
-    reading,
-    id,
     finished,
-    createdAt,
+    reading,
+    insertedAt,
     updatedAt,
   };
   if (name === undefined) {
@@ -65,7 +65,7 @@ const addBooksHandler = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Catatan gagal ditambahkan',
+    message: 'Buku gagal ditambahkan',
   });
   response.code(500);
   return response;
@@ -74,8 +74,30 @@ const addBooksHandler = (request, h) => {
 const getAllBooksHandler = () => ({
   status: 'success',
   data: {
-    books,
+    books: books.map((book) => (
+      {
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
   },
 });
+
+// const getAllBooksHandler = (request, h) => {
+//   const allBooks = books.map((book) => (
+//     {
+//       id: book.id,
+//       name: book.name,
+//       publisher: book.publisher,
+//     }));
+//   const response = h.response({
+//     message: 'success',
+//     data: {
+//       allBooks,
+//     },
+//   });
+//   response.code(201);
+//   return response;
+// };
 
 module.exports = { addBooksHandler, getAllBooksHandler };
